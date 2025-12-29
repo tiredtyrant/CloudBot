@@ -406,7 +406,7 @@ class Hastebin(Pastebin):
             raise ServiceHTTPError(j["message"], r)
 
 
-pastebins.register("hastebin", Hastebin(HASTEBIN_SERVER))
+#pastebins.register("hastebin", Hastebin(HASTEBIN_SERVER))
 
 shorteners.register("git.io", Gitio())
 shorteners.register("goo.gl", Googl())
