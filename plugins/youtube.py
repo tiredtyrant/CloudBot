@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING
 
 import isodate
 import requests
+import random
 
 from cloudbot import hook
 from cloudbot.bot import bot_instance
@@ -277,7 +278,7 @@ def ytplaylist_url(match: Match[str]) -> str | None:
     return f"\x02{title}\x02 {count_videos} - \x02{author}\x02"
 
 @hook.command("tocaraul")
-def tocaraul(bot):
+def tocaraul(reply):
     songlist = ['tente outra vez', 'metamorfose ambulante', 'maluco beleza', 'gita', 'ouro de tolo', 'meu amigo pedro', 'medo da chuva', 'vampiro doidão', 'prelúdio', 'eu nasci há dez mil anos atrás', 'cowboy fora da lei', 'canto para a minha morte', 'a maçã', 'sociedade alternativa', 'o trem das 7', 'eu também vou reclamar', 'capim guiné', 'carimbador maluco', 'disco voador', 'tu és o mdc da minha vida']
     """youtube <query> -- Returns the first YouTube search result for <query>."""
 
@@ -291,7 +292,7 @@ def tocaraul(bot):
         raise
 
 @hook.command("gope")
-def gope(bot):
+def gope(reply):
     gope_id = "XT6kSdO4RVA"
     try:
         return get_video_description(gope_id) + " - " + make_short_url(gope_id)
