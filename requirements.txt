@@ -21,3 +21,8 @@ typing_extensions==4.15.0
 urllib3==2.6.2
 watchdog==6.0.0
 yarl==1.22.0
+
+emoji==2.15.0
+Unidecode==1.4.0
+praw==7.8.1
+prawcore==2.4.0
