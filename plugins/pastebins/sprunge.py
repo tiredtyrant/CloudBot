@@ -49,4 +49,5 @@ def register() -> None:
 
 @hook.on_stop()
 def unregister() -> None:
-    pastebins.remove("sprunge")
+    pass
+    #pastebins.remove("sprunge")
