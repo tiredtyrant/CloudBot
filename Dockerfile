@@ -59,3 +59,5 @@ CMD ["python3", "-m", "cloudbot"]
 
 # To build the Docker image, run:
 # docker buildx build -t tiredtyrant/huebot:latest .
+# To run the Docker container, run:
+# docker run -d --restart=always -v "/some_path/config.json:/app/config.json" -v "/some_path/cloudbot.db:/app/cloudbot.db" tiredtyrant/huebot:latest
