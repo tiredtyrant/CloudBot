@@ -122,7 +122,7 @@ def random_tjader_search():
     return do_search(subs)
 
 @hook.command('bng')
-def random_tjader_search():
+def random_goika_search():
     subs = ['salads', 'salad']
     return do_search(subs)
 
