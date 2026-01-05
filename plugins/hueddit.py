@@ -123,7 +123,7 @@ def random_tjader_search():
 
 @hook.command('bng')
 def random_goika_search():
-    subs = ['salads', 'salad']
+    subs = ['natureporn', 'forest', 'outdoors', 'hiking']
     return do_search(subs)
 
 @hook.command('glub')
