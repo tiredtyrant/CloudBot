@@ -24,7 +24,7 @@ def getNameByAlias(alias, db):
     ).fetchone()
 
     if result:
-        return result[0]
+        return result[1]
     else:
         return None
 
