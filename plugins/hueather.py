@@ -82,6 +82,27 @@ def mph_to_kph(mph):
     return float(mph * MI_TO_KM)
 
 
+# UV index exposure categories (WHO UV Index scale), as inclusive upper bounds
+UV_INDEX_CATEGORIES = (
+    (2, 'Low'),
+    (5, 'Moderate'),
+    (7, 'High'),
+    (10, 'Very high'),
+)
+
+
+def uv_index_to_str(uv_index):
+    """Map a numeric UV index to its WHO exposure category."""
+    if uv_index is None:
+        return 'Unknown'
+
+    for threshold, label in UV_INDEX_CATEGORIES:
+        if uv_index <= threshold:
+            return label
+
+    return 'Extreme'
+
+
 class LocationNotFound(Exception):
     def __init__(self, location):
         super().__init__("Unable to find location {!r}".format(location))
@@ -213,12 +234,14 @@ def weather(reply, db, triggered_prefix, event):
     wind_speed = current['windSpeed']
     today_high = today['temperatureHigh']
     today_low = today['temperatureLow']
+    uv_index = current['uvIndex']
     current.update(
         name='Current',
         wind_direction=bearing_to_card(current['windBearing']),
         wind_speed_mph=wind_speed,
         wind_speed_kph=mph_to_kph(wind_speed),
         summary=current['summary'].rstrip('.'),
+        uv_desc=uv_index_to_str(uv_index),
         temp_f=round_temp(current['temperature']),
         temp_c=round_temp(convert_f2c(current['temperature'])),
         temp_high_f=round_temp(today_high),
@@ -233,6 +256,7 @@ def weather(reply, db, triggered_prefix, event):
         ('Low', "{temp_low_f}F/{temp_low_c}C"),
         ('Humidity', "{humidity:.0%}"),
         ('Wind', "{wind_speed_mph:.0f}MPH/{wind_speed_kph:.0f}KPH {wind_direction}"),
+        ('UV Index', "{uv_desc} ({uvIndex})"),
     ]
 
     current_str = '; '.join(
@@ -283,6 +307,7 @@ def forecast(reply, db, event):
             wind_speed_mph=wind_speed,
             wind_speed_kph=mph_to_kph(wind_speed),
             summary=day_fc['summary'].rstrip('.'),
+            uv_desc=uv_index_to_str(day_fc['uvIndex']),
         )
 
     for fc_data in (today, tomorrow, *three_days):
@@ -300,6 +325,7 @@ def forecast(reply, db, event):
         ('Low', "{temp_low_f:.0f}F/{temp_low_c:.0f}C"),
         ('Humidity', "{humidity:.0%}"),
         ('Wind', "{wind_speed_mph:.0f}MPH/{wind_speed_kph:.0f}KPH {wind_direction}"),
+        ('Peak UV', "{uv_desc} ({uvIndex})"),
     ]
 
     day_str = colors.parse("$(b){name}$(b): {summary}; ") + '; '.join(
